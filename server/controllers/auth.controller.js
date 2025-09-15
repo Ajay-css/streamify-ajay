@@ -52,10 +52,11 @@ export async function signup(req, res) {
 
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true, // prevent XSS attacks,
-      strict: true,
-      sameSite: "none", // prevent CSRF attacks
+      httpOnly: true,   // prevents JS access (good)
+      secure: true,     // required for HTTPS (Vercel)
+      sameSite: "none", // allow cross-site (frontend <-> backend diff domain)
     });
+
 
     res.status(201).json({ success: true, user: newUser });
   } catch (error) {
@@ -84,10 +85,11 @@ export async function login(req, res) {
 
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true, // prevent XSS attacks,
-      strict: true,
-      sameSite: "none", // prevent CSRF attacks
+      httpOnly: true,   // prevents JS access (good)
+      secure: true,     // required for HTTPS (Vercel)
+      sameSite: "none", // allow cross-site (frontend <-> backend diff domain)
     });
+
 
     res.status(200).json({ success: true, user });
   } catch (error) {
